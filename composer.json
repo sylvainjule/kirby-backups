@@ -1,0 +1,15 @@
+{
+    "name": "sylvainjule/backups",
+    "description": "Manage backups from the Kirby panel",
+    "type": "kirby-plugin",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sylvain Julé",
+            "email": "contact@sylvain-jule.fr"
+        }
+    ],
+    "require": {
+        "getkirby/composer-installer": "^1.1"
+    },
+}

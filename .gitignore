@@ -1,0 +1,12 @@
+# OS files
+.DS_Store
+
+# NPM files
+/node_modules
+package-lock.json
+
+# Parcel cache folder
+.cache
+
+# Composer files
+/vendor

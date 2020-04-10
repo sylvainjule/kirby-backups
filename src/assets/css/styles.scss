@@ -1,0 +1,102 @@
+.k-backups-view-header {
+    .k-button[data-disabled] { opacity: 1; }
+}
+
+.backups-header {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    font-size: .875rem;
+    font-weight: 600;
+    padding: 0 .7rem;
+    background: #e8e8e8;
+}
+
+.backups-list {
+    font-size: .875rem;
+    li {
+        height: 40px;
+        display: flex;
+        align-items: center;
+        padding: 0 .7rem;
+        &:not(:first-child) { border-top: 1px solid rgba(0, 0, 0, .12); }
+        &:last-child        { border-bottom: 1px solid rgba(0, 0, 0, .12); }
+        &:hover {
+            background: white;
+            border-color: transparent;
+            &+ li {
+                border-top-color: transparent;
+            }
+        }
+        .k-icon svg {
+            width: .875rem;
+            height: .875rem;
+        }
+        .backup-filename {
+            display: flex;
+            align-items: center;
+            .k-icon {
+                margin-right: .5rem;
+            }
+        }
+        .backup-actions {
+            .backup-download {
+                padding: .075rem .45rem .25rem .45rem;
+                border-radius: 3px;
+                background: white;
+                margin-right: .5rem;
+                .k-icon svg {
+                    width: .7rem;
+                    height: .7rem;
+                }
+            }
+        }
+    }
+}
+
+.backup-filename { width: 40%; }
+.backup-size     { width: 20%; }
+.backup-date     { width: 20%; }
+.backup-actions  { width: 20%; text-align: right; }
+
+.backups-placeholder {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &-loader {
+        padding: 3rem 2rem;
+        svg {
+            width: 24px;
+            height: 24px;
+        }
+
+    }
+    &-empty {
+        font-size: .875rem;
+        background: #e8e8e8;
+        padding: 1rem 2rem;
+    }
+}
+
+.backups-delete-dialog {
+    .k-box, .warning-loading {
+        margin-top: 1rem;
+    }
+    &:not(.can-delete) {
+        .k-dialog-button-submit {
+            opacity: 0.2;
+            pointer-events: none;
+        }
+    }
+    .warning-loading {
+        height: 58px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .k-icon svg {
+            width: 24px;
+            height: 24px;
+        }
+    }
+}
