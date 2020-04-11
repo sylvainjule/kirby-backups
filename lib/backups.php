@@ -13,8 +13,8 @@ class Backups {
 
     function __construct() {
         $this->dir = \Bnomei\BackupZipJob::directory() . '/';
-        $this->publicDir = kirby()->root('assets') . '/backups/';
-        $this->publicUrl = kirby()->url('assets')  . '/backups/';
+        $this->publicDir = kirby()->root('assets') . '/'. option('sylvainjule.backups.publicFolder')  .'/';
+        $this->publicUrl = kirby()->url('assets') . '/'. option('sylvainjule.backups.publicFolder')  .'/';
     }
 
     public function getBackupsArray($toApi = false) {

@@ -3,6 +3,9 @@
 require_once __DIR__ . '/lib/backups.php';
 
 Kirby::plugin('sylvainjule/backups', [
+    'options' => [
+        'publicFolder' => 'backups-temp',
+    ],
     'api' => [
         'routes' => [
             [
