@@ -1,5 +1,4 @@
 # Cookbook example
----
 
 Code associated with the Backups cookbook.
 
