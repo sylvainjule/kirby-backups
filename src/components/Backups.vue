@@ -25,7 +25,7 @@
                 <div class="backup-date">{{ $t('backups.created') }}</div>
             </header>
             <ul class="backups-list">
-                <backup-entry v-for="backup in backups" :key="backup.filename" :backup="backup" :downloading="downloading == backup.filename" @download="copyAndDownload" @deleteClicked="openBackupDeleteDialog(backup)" />
+                <backup-entry v-for="backup in backups" :key="backup.filename" :backup="backup" :downloading="downloading == backup.filename" @download="copyAndDownload" @delete="openBackupDeleteDialog(backup)" />
             </ul>
         </section>
         <div class="backups-placeholder" v-else>
@@ -81,6 +81,16 @@ export default {
             this.$api.get('plugin-janitor/backupZip')
                 .then(response => {
                     this.setCreationStatus(response.status, true)
+
+                    if(response.status == 200) {
+                        let newBackup = {
+                            filename: response.filename + '.zip',
+                            size: response.nicesize,
+                            date: response.modified
+                        }
+
+                        this.backups.unshift(newBackup)
+                    }
                 })
                 .catch(error => {
                     this.setCreationStatus('error', true);
@@ -89,17 +99,11 @@ export default {
         setCreationStatus(status, resetAfter = true) {
             this.creationStatus = status == 200 ? 'success' : 'error';
 
-            if(status == 200) this.listNewBackup();
-
             if(resetAfter) {
                 setTimeout(() => {
                     this.creationStatus = 'default'
                 }, 2000);
             }
-        },
-        listNewBackup() {
-            this.$api.get('backups/get-newest-backup')
-                .then(response => { response && this.backups.unshift(response); })
         },
 
         /* Download

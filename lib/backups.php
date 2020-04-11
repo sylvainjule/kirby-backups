@@ -38,11 +38,6 @@ class Backups {
         return $backups;
     }
 
-    public function getNewestBackup() {
-        $backups = $this->getBackupsArray(true);
-        return $backups[0];
-    }
-
     public function deleteBackup($filename) {
         $path     = $this->dir . $filename;
         $deleted  = false;

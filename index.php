@@ -30,13 +30,6 @@ Kirby::plugin('sylvainjule/backups', [
                 }
             ],
             [
-                'pattern' => 'backups/get-newest-backup',
-                'action'  => function() {
-                    $b = new SylvainJule\Backups();
-                    return $b->getNewestBackup();
-                }
-            ],
-            [
                 'pattern' => 'backups/delete-backup',
                 'method'  => 'POST',
                 'action'  => function() {
