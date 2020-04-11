@@ -1,6 +1,6 @@
 # Kirby Backups
 
-This plugin allows you to create, download and manage backups from a dedicated View. Works together with [kirby-janitor](https://github.com/bnomei/kirby3-janitor)
+This plugin allows you to create, download and manage backups from a dedicated View. Works together with [kirby-janitor](https://github.com/bnomei/kirby3-janitor).
 
 {{Screenshot}}
 
@@ -19,7 +19,7 @@ This plugin allows you to create, download and manage backups from a dedicated V
 
 ## 1. Installation
 
-> Prerequisite: you must also install [kirby-janitor 2.4.7+](https://github.com/bnomei/kirby3-janitor) for this plugin to work.
+> Prerequisite: you must install [kirby-janitor 2.4.7+](https://github.com/bnomei/kirby3-janitor) for this plugin to work.
 
 Download and copy this repository to ```/site/plugins/backups```
 
@@ -42,7 +42,7 @@ return [
 
 Any backup, created either with this plugin or with any of the janitor's options (CLI, CRON job, etc), will now show up in the Backups view.
 
-Janitor stores the backups in a `site/backups` folder. This folder isn't public and we should keep it that way. Therefore, anytime a user triggers a *Download* button, the plugin will create a copy of the given backup in the `assets` folder and expose an url from there.
+Janitor stores the backups in a `site/backups` folder. This folder isn't public and we should keep it that way. Therefore, anytime a user triggers a *Download* button, the plugin will create a copy of the given backup in a `assets/backups` folder and expose an url from there.
 
 When the user leaves the view, copies will be deleted.
 

@@ -1,27 +1,28 @@
 <template>
     <k-view class="k-backups-view">
         <k-header class="k-backups-view-header">
-            <span v-if="!listLoading">{{ backups.length }}</span> Backups
+            <span v-if="listLoading">{{ $t('view.backups') }}</span>
+            <span v-else>{{ backups.length }} {{ $t('backups.pluralized', {}, backups.length) }}</span>
 
             <k-button-group slot="left">
-                <k-button v-if="creationStatus == 'default'" icon="add" @click="createBackup">Create a new backup</k-button>
-                <k-button v-else-if="creationStatus == 'progress'" icon="backupsLoader" :disabled="true">Creating the backup</k-button>
-                <k-button v-else-if="creationStatus == 'success'" icon="check" :disabled="true" theme="positive">Backup successfully created</k-button>
-                <k-button v-else-if="creationStatus == 'error'" icon="alert" :disabled="true" theme="negative">An error occurred during the backup creation</k-button>
+                <k-button v-if="creationStatus == 'default'" icon="add" @click="createBackup">{{ $t('backups.create') }}</k-button>
+                <k-button v-else-if="creationStatus == 'progress'" icon="backupsLoader" :disabled="true">{{ $t('backups.create.process') }}</k-button>
+                <k-button v-else-if="creationStatus == 'success'" icon="check" :disabled="true" theme="positive">{{ $t('backups.create.success') }}</k-button>
+                <k-button v-else-if="creationStatus == 'error'" icon="alert" :disabled="true" theme="negative">{{ $t('backups.create.error') }}</k-button>
             </k-button-group>
 
             <k-button-group slot="right" v-if="backups.length">
-                <k-button icon="download" @click="copyAndDownload('latest')" v-if="downloading !== 'latest'">Download the latest backup</k-button>
-                <k-button icon="backupsLoader" :disabled="true" v-else>Downloading</k-button>
-                <k-button icon="trash" @click="openBackupsDeleteDialog">Delete some backups</k-button>
+                <k-button icon="download" @click="copyAndDownload('latest')" v-if="downloading !== 'latest'">{{ $t('backups.download.latest') }}</k-button>
+                <k-button icon="backupsLoader" :disabled="true" v-else>{{ $t('backups.downloading') }}</k-button>
+                <k-button icon="trash" @click="openBackupsDeleteDialog">{{ $t('backups.delete.some') }}</k-button>
             </k-button-group>
         </k-header>
 
         <section class="backups-section" v-if="backups.length">
             <header class="backups-header">
-                <div class="backup-filename">Filename</div>
-                <div class="backup-size">Size</div>
-                <div class="backup-date">Created</div>
+                <div class="backup-filename">{{ $t('backups.filename') }}</div>
+                <div class="backup-size">{{ $t('backups.size') }}</div>
+                <div class="backup-date">{{ $t('backups.created') }}</div>
             </header>
             <ul class="backups-list">
                 <backup-entry v-for="backup in backups" :key="backup.filename" :backup="backup" :downloading="downloading == backup.filename" @download="copyAndDownload" @deleteClicked="openBackupDeleteDialog(backup)" />
@@ -29,7 +30,7 @@
         </section>
         <div class="backups-placeholder" v-else>
             <div class="backups-placeholder-loader" v-if="listLoading"><k-icon type="backupsLoader" /></div>
-            <div class="backups-placeholder-empty" v-else>There is no backup to display</div>
+            <div class="backups-placeholder-empty" v-else>{{ $t('backups.placeholder') }}</div>
         </div>
 
         <backup-delete-dialog ref="backup-delete" @deleted="onBackupDeleted"/>
@@ -58,6 +59,7 @@ export default {
     },
     mounted() {
         this.getBackups();
+        window.beforeunload = this.deletePublicBackups();
     },
     destroyed() {
         this.deletePublicBackups();

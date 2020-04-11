@@ -1,7 +1,8 @@
 <template>
-    <k-dialog size="medium" ref="dialog" theme="negative" icon="trash" button="Yes, delete it" @close="resetBackup" @cancel="resetBackup" @submit="deleteBackup">
+    <k-dialog size="medium" ref="dialog" theme="negative" icon="trash"
+              :button="$t('backups.delete.button')" @close="resetBackup" @cancel="resetBackup" @submit="deleteBackup">
         <k-text>
-            You are about to delete <strong>{{ filename }}</strong>
+            {{ $t('backups.delete.prefix') }} <strong>{{ filename }}</strong>
         </k-text>
     </k-dialog>
 </template>

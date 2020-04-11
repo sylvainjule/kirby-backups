@@ -65,15 +65,14 @@ class Backups {
         $remainingCount = $backupsCount - $toDeleteCount;
 
         if($toDeleteCount) {
-            $firstStr  = $toDeleteCount  == 1 ? '1 backup will be deleted. '         : $toDeleteCount .' backups will be deleted. ';
-            $secondStr = $remainingCount == 0 ? '<strong>There will be no backup left.</strong> '     : 'There will be '. $remainingCount .' backups left. ';
-            $secondStr = $remainingCount == 1 ? 'There will be 1 backup left. '      : $secondStr;
-            $thirdStr  = $remainingCount == 0 ? 'Do you want to delete them anyway?' : 'Do you want to continue?';
+            $firstStr  = tc('backups.delete.warning.deletable', $toDeleteCount);
+            $secondStr = tc('backups.delete.warning.remaining', $remainingCount);
+            $thirdStr  = tc('backups.delete.warning.question',  $remainingCount);
 
             $text = $firstStr . $secondStr . '<br>' . $thirdStr;
         }
         else {
-            $text = 'No backup matches your criteria, there is nothing to delete.';
+            $text = t('backups.delete.warning.noMatch');
         }
 
         return [

@@ -1,5 +1,6 @@
 <template>
-    <k-dialog :class="['backups-delete-dialog', {'can-delete': canDelete}]" ref="dialog" button="Yes, delete them" theme="negative" icon="trash" size="medium"
+    <k-dialog :class="['backups-delete-dialog', {'can-delete': canDelete}]" ref="dialog"
+              :button="$t('backups.delete.multiple.button')" theme="negative" icon="trash" size="medium"
               @submit="deleteBackups">
 
         <k-form ref="form" :fields="fields" v-model="value" @input="onPeriodChange"/>
@@ -23,14 +24,14 @@ export default {
             value: { period: null },
             fields: {
                 period: {
-                    label: 'Which backups do you want to delete?',
+                    label: this.$t('backups.delete.multiple.question'),
                     type: 'select',
-                    placeholder: 'Please select a period',
+                    placeholder: this.$t('backups.delete.multiple.placeholder'),
                     options: [
-                        {value: 'minute', text: 'Delete backups older than a minute'},
-                        {value: 'month', text: 'Delete backups older than a month'},
-                        {value: 'half', text: 'Delete backups older than 6 months'},
-                        {value: 'year', text: 'Delete backups older than a year'},
+                        {value: 'minute', text: this.$t('backups.delete.multiple.week')},
+                        {value: 'month', text: this.$t('backups.delete.multiple.month')},
+                        {value: 'half', text: this.$t('backups.delete.multiple.half')},
+                        {value: 'year', text: this.$t('backups.delete.multiple.year')},
                     ]
                 },
             },
