@@ -2,7 +2,7 @@
 
 This plugin allows you to create, download and manage backups from a dedicated View. Works together with [kirby-janitor](https://github.com/bnomei/kirby3-janitor).
 
-{{Screenshot}}
+![screenshot](https://user-images.githubusercontent.com/14079751/79039902-d97f9b00-7be4-11ea-9d0d-d4e16dfff28e.jpg)
 
 <br/>
 
