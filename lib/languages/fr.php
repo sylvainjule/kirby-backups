@@ -11,7 +11,7 @@ return [
     'backups.created'      => 'Date de création',
 
     'backups.create'         => 'Créer une nouvelle sauvegarde',
-    'backups.create.process' => 'Création de la sauvegarde',
+    'backups.create.process' => 'Sauvegarde en cours',
     'backups.create.success' => 'La sauvegarde a été réalisée avec succès',
     'backups.create.error'   => 'Une erreur s\'est produite lors de la sauvegarde',
 

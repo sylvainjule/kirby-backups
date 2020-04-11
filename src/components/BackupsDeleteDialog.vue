@@ -28,7 +28,7 @@ export default {
                     type: 'select',
                     placeholder: this.$t('backups.delete.multiple.placeholder'),
                     options: [
-                        {value: 'minute', text: this.$t('backups.delete.multiple.week')},
+                        {value: 'week', text: this.$t('backups.delete.multiple.week')},
                         {value: 'month', text: this.$t('backups.delete.multiple.month')},
                         {value: 'half', text: this.$t('backups.delete.multiple.half')},
                         {value: 'year', text: this.$t('backups.delete.multiple.year')},

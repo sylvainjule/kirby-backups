@@ -104,3 +104,25 @@
         }
     }
 }
+
+@media screen and (max-width: 60em) {
+    .k-backups-view-header {
+        .k-bar-slot[data-position="right"] { display: none; }
+    }
+
+    .backup-filename { width: calc(100% - 150px); }
+    .backup-size, .backup-date {
+        display: none;
+    }
+    .backup-actions { width: 150px; }
+}
+
+@media screen and (max-width: 35em) {
+    .backup-filename { width: calc(100% - 25px); }
+    .backup-actions {
+        width: 25px;
+        .backup-download {
+            display: none;
+        }
+    }
+}
