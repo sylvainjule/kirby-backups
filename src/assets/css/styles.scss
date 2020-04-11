@@ -9,7 +9,10 @@
     font-size: .875rem;
     font-weight: 600;
     padding: 0 .7rem;
-    background: #e8e8e8;
+    background: #e5e5e5;
+    position: sticky;
+    top: 0;
+    z-index: 1;
 }
 
 .backups-list {
