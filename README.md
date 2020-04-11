@@ -42,7 +42,7 @@ return [
 
 Any backup, created either with this plugin or with any of the janitor's options (CLI, CRON job, etc), will now show up in the Backups view.
 
-Janitor stores the backups in a `site/backups` folder. This folder isn't public and we should keep it that way. Therefore, anytime a user triggers a *Download* button, the plugin will create a copy of the given backup in a `assets/backups-temp` folder and expose an url from there.
+Janitor stores the backups in a `site/backups` folder. This folder isn't public and we should keep it that way. Therefore, anytime a user triggers a *Download* button, the plugin will create a copy of the given backup in a `backups-temp` folder and expose an url from there.
 
 When the user leaves the view, copies will be deleted.
 
@@ -51,6 +51,7 @@ This default public `assets/backup-temp` folder can be changed to any name you'd
 ```php
 // site/config.php
 return [
+    // backups will be copied in assets/my-secretly-public-backups
     'sylvainjule.backups.publicFolder' => 'my-secretly-public-backups',
 ];
 ```
