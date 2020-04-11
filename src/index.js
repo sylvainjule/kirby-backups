@@ -3,8 +3,8 @@ import Backups from './components/Backups.vue';
 panel.plugin('sylvainjule/backups', {
     views: {
         backups: {
-            icon: 'backups',
             component: Backups,
+            icon: 'backups',
         }
     },
     icons: {

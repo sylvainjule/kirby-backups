@@ -1,6 +1,6 @@
 {
     "name": "sylvainjule/backups",
-    "description": "Manage backups from the Kirby panel",
+    "description": "Backups cookbook example",
     "type": "kirby-plugin",
     "license": "MIT",
     "authors": [
@@ -11,5 +11,5 @@
     ],
     "require": {
         "getkirby/composer-installer": "^1.1"
-    },
+    }
 }

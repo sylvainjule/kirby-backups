@@ -9,10 +9,7 @@
     font-size: .875rem;
     font-weight: 600;
     padding: 0 .7rem;
-    background: #e5e5e5;
-    position: sticky;
-    top: 0;
-    z-index: 1;
+    background: #e8e8e8;
 }
 
 .backups-list {
@@ -67,42 +64,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    &-loader {
-        padding: 3rem 2rem;
-        svg {
-            width: 24px;
-            height: 24px;
-        }
-    }
-    &-empty {
-        width: 100%;
-        text-align: center;
-        font-size: .875rem;
-        background: #e8e8e8;
-        padding: 1.5rem 2rem;
-    }
-}
-
-.backups-delete-dialog {
-    .k-box, .warning-loading {
-        margin-top: 1rem;
-    }
-    &:not(.can-delete) {
-        .k-dialog-button-submit {
-            opacity: 0.2;
-            pointer-events: none;
-        }
-    }
-    .warning-loading {
-        height: 58px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        .k-icon svg {
-            width: 24px;
-            height: 24px;
-        }
-    }
+    font-size: .875rem;
+    background: #e8e8e8;
+    padding: 1.5rem 2rem;
 }
 
 @media screen and (max-width: 60em) {
