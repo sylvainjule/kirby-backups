@@ -84,12 +84,14 @@ class Backups {
     public function deleteBackups($period) {
         $stamp    = $this->toTimestamp($period);
         $toDelete = $this->getToDeleteArray($stamp);
+        $deleted  = [];
 
         foreach($toDelete as $filename) {
             F::remove($this->dir . $filename);
+            $deleted[] = $filename;
         }
 
-        return $toDelete;
+        return $deleted;
     }
 
     public function copyToAssets($filename) {
