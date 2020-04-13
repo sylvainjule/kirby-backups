@@ -19,7 +19,7 @@ This plugin allows you to create, download and manage backups from a dedicated V
 
 ## 1. Installation
 
-> Prerequisite: you must install [kirby-janitor 2.4.7+](https://github.com/bnomei/kirby3-janitor) for this plugin to work.
+> Prerequisite: you must install [kirby-janitor 2.4.8+](https://github.com/bnomei/kirby3-janitor) for this plugin to work.
 
 Download and copy this repository to ```/site/plugins/backups```
 
