@@ -58,6 +58,15 @@ return [
 
 The backups list isn't paginated because it is not intended to keep hundreds of backups around. If included in a client website, you should include a note specifying an expected frequency of backup creation / deletion (or set up a CRON job).
 
+There's also a way to disable the "Backups" menu-item for specific user roles:
+
+```yml
+# site/blueprints/users/{role}.yml
+permissions:
+  access:
+    backups: false
+```
+
 <br/>
 
 ## 3. License
