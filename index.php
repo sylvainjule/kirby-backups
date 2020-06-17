@@ -69,5 +69,6 @@ Kirby::plugin('sylvainjule/backups', [
     'translations' => [
         'en' => require_once __DIR__ . '/lib/languages/en.php',
         'fr' => require_once __DIR__ . '/lib/languages/fr.php',
+        'de' => require_once __DIR__ . '/lib/languages/de.php',
     ],
 ]);
