@@ -1,8 +1,36 @@
 <?php
 
-require_once __DIR__ . '/lib/backups.php';
+load([
+    'sylvainjule\\backups' => __DIR__ . '/lib/backups.php',
+]);
 
 Kirby::plugin('sylvainjule/backups', [
+    'areas' => [
+        'backups' => function () {
+            return [
+                'icon' => 'server',
+                'label' => t('view.backups'),
+                'menu'  => true,
+                'views' => [
+                    'backups' => [
+                        'pattern' => 'backups',
+                        'action'  => function () {
+                            $backups = (new SylvainJule\Backups())->getBackupsArray(true);
+                            $count   = count($backups);
+
+                            return [
+                                'component' => 'k-backups-view',
+                                'props' => [
+                                    'backups' => $backups,
+                                    'title'   => tc('backups.pluralized', $count)
+                                ]
+                            ];
+                        }
+                    ]
+                ]
+            ];
+        }
+    ],
     'options' => [
         'publicFolder' => 'backups-temp',
     ],
@@ -67,8 +95,8 @@ Kirby::plugin('sylvainjule/backups', [
         ]
     ],
     'translations' => [
-        'en' => require_once __DIR__ . '/lib/languages/en.php',
-        'fr' => require_once __DIR__ . '/lib/languages/fr.php',
-        'de' => require_once __DIR__ . '/lib/languages/de.php',
+        'en' => require_once __DIR__ . '/i18n/en.php',
+        'fr' => require_once __DIR__ . '/i18n/fr.php',
+        'de' => require_once __DIR__ . '/i18n/de.php',
     ],
 ]);

@@ -2,7 +2,7 @@
 
 return [
     'view.backups'       => 'Backups',
-    'backups.pluralized' => ['Backup', 'Backups'],
+    'backups.pluralized' => [1 => '{{ count }} Backup', '{{ count }} Backups'],
 
     'backups.placeholder'    => 'There is no backup to display',
 

@@ -2,8 +2,7 @@
 
 return [
     'view.backups'       => 'Sauvegardes',
-    'backups.pluralized' => ['Sauvegarde', 'Sauvegardes'],
-
+    'backups.pluralized' => [1 => '{{ count }} Sauvegarde', '{{ count }} Sauvegardes'],
     'backups.placeholder'    => 'Il n\'y a actuellement aucune sauvegarde',
 
     'backups.filename'     => 'Nom du fichier',
