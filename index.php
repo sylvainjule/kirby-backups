@@ -33,14 +33,23 @@ Kirby::plugin('sylvainjule/backups', [
     ],
     'options' => [
         'publicFolder' => 'backups-temp',
-        'prefix' => 'backup-'
+        'prefix'       => 'backup-',
+        'maximum'      => false,
     ],
     'api' => [
         'routes' => [
             [
                 'pattern' => 'backups/create-backup',
                 'action'  => function() {
-                    $output = realpath(kirby()->roots()->accounts() .'/../') . '/backups/'. option('sylvainjule.backups.prefix') .'{{ timestamp }}.zip';
+                    $maximum = option('sylvainjule.backups.maximum');
+                    $b = new SylvainJule\Backups();
+                    $bCount = $b->getBackupsCount();
+
+                    $output  = realpath(kirby()->roots()->accounts() .'/../') . '/backups/'. option('sylvainjule.backups.prefix') .'{{ timestamp }}.zip';
+
+                    if($maximum && $bCount == $maximum) {
+                        $b->deleteOldestBackup();
+                    }
 
                     return janitor()->command('janitor:backupzip --output '. $output .' --quiet');
                 }

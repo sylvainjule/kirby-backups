@@ -58,6 +58,17 @@ return [
 
 The backups list isn't paginated because it is not intended to keep hundreds of backups around. If included in a client website, you should include a note specifying an expected frequency of backup creation / deletion (or set up a CRON job).
 
+You can enforce a maximum number of backups by setting the `maximum` option to any integer (default is `false`).
+If this number is reached the oldest backup will be deleted automatically whenever a new backup is created.
+
+```php
+// site/config.php
+return [
+    'sylvainjule.backups.maximum' => 5,
+];
+```
+
+
 There's also a way to disable the "Backups" menu-item for specific user roles:
 
 ```yml

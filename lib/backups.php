@@ -28,6 +28,10 @@ class Backups {
         return $backups;
     }
 
+    public function getBackupsCount() {
+        return count($this->getBackupsArray());
+    }
+
     public function getToDeleteArray($stamp) {
         $backups = $this->getBackupsArray();
 
@@ -48,6 +52,13 @@ class Backups {
         }
 
         return $deleted;
+    }
+
+    public function deleteOldestBackup() {
+        $backups  = $this->getBackupsArray();
+        $filename = end($backups);
+
+        $this->deleteBackup($filename);
     }
 
     public function simulateDeletion($period) {
