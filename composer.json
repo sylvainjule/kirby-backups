@@ -3,6 +3,7 @@
     "description": "Manage backups from the Kirby panel",
     "type": "kirby-plugin",
     "license": "MIT",
+    "version": "1.0.3",
     "authors": [
         {
             "name": "Sylvain Julé",
