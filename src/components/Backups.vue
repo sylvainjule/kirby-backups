@@ -73,7 +73,7 @@
         this.creationStatus = 'progress';
 
         try {
-            const response = await this.$api.get('plugin-janitor/backupZip');
+            const response = await this.$api.get('backups/create-backup');
             await this.$reload();
             this.setCreationStatus(response.status, true);
         } catch(error) {

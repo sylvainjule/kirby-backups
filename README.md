@@ -19,7 +19,7 @@ This plugin allows you to create, download and manage backups from a dedicated V
 
 ## 1. Installation
 
-> Prerequisite: you must install [kirby-janitor 2.4.8+](https://github.com/bnomei/kirby3-janitor) for this plugin to work.
+> Prerequisite: you must install [kirby-janitor 3+](https://github.com/bnomei/kirby3-janitor) (and the CLI per janitor's instructions) for this plugin to work.
 
 Download and copy this repository to ```/site/plugins/backups```
 
@@ -31,12 +31,12 @@ Alternatively, you can install it with composer: ```composer require sylvainjule
 
 The plugin will work out of the box, no need for additionnal setup.
 
-You can, however, set a janitor option to prefix the backups' filename, in order to make them more human readable (default is `{TIMESTAMP}.zip`)
+You can, however, change the prefix of the backups' filename (default is `backup-{TIMESTAMP}.zip`)
 
 ```php
 // site/config.php
 return [
-    'bnomei.janitor.backupzip.prefix' => 'backup-',
+    'sylvainjule.backups.prefix' => 'backup-',
 ];
 ```
 

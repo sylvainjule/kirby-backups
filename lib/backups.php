@@ -12,7 +12,7 @@ class Backups {
     protected $publicUrl;
 
     function __construct() {
-        $this->dir = \Bnomei\BackupZipJob::directory() . '/';
+        $this->dir = realpath(kirby()->roots()->accounts() . '/../') .'/backups/';
         $this->publicDir = kirby()->root('assets') . '/'. option('sylvainjule.backups.publicFolder')  .'/';
         $this->publicUrl = kirby()->url('assets') . '/'. option('sylvainjule.backups.publicFolder')  .'/';
     }

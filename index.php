@@ -33,9 +33,18 @@ Kirby::plugin('sylvainjule/backups', [
     ],
     'options' => [
         'publicFolder' => 'backups-temp',
+        'prefix' => 'backup-'
     ],
     'api' => [
         'routes' => [
+            [
+                'pattern' => 'backups/create-backup',
+                'action'  => function() {
+                    $output = realpath(kirby()->roots()->accounts() .'/../') . '/backups/'. option('sylvainjule.backups.prefix') .'{{ timestamp }}.zip';
+
+                    return janitor()->command('janitor:backupzip --output '. $output .' --quiet');
+                }
+            ],
             [
                 'pattern' => 'backups/get-backups-list',
                 'action'  => function() {
