@@ -10,11 +10,15 @@ class Backups {
     protected $dir;
     protected $publicDir;
     protected $publicUrl;
+    protected $maximum;
+    protected $prefix;
 
     function __construct() {
         $this->dir = realpath(kirby()->roots()->accounts() . '/../') .'/backups/';
         $this->publicDir = kirby()->root('assets') . '/'. option('sylvainjule.backups.publicFolder')  .'/';
         $this->publicUrl = kirby()->url('assets') . '/'. option('sylvainjule.backups.publicFolder')  .'/';
+        $this->maximum   = kirby()->option('sylvainjule.backups.maximum');
+        $this->prefix    = kirby()->option('sylvainjule.backups.prefix');
     }
 
     public function getBackupsArray($toApi = false) {
@@ -40,6 +44,17 @@ class Backups {
         });
 
         return $backups;
+    }
+
+    public function createBackup() {
+        $count  = $this->getBackupsCount();
+        $output  = realpath(kirby()->roots()->accounts() .'/../') . '/backups/'. $this->prefix .'{{ timestamp }}.zip';
+
+        if($this->maximum && $count == $this->maximum) {
+            $this->deleteOldestBackup();
+        }
+
+        return janitor()->command('janitor:backupzip --output '. $output .' --quiet');
     }
 
     public function deleteBackup($filename) {

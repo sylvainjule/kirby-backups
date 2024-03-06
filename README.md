@@ -69,6 +69,12 @@ return [
 ];
 ```
 
+If you want to create backups from a CRON job and still benefit from this `maximum` option, the plugin exposes a tweaked janitor webhook:
+
+```
+https://your.domain/backups-webhook/{janitor.secret}/create-backup
+```
+
 
 There's also a way to disable the "Backups" menu-item for specific user roles:
 

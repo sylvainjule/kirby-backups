@@ -36,22 +36,37 @@ Kirby::plugin('sylvainjule/backups', [
         'prefix'       => 'backup-',
         'maximum'      => false,
     ],
+    'routes' => [
+        [
+            'pattern' => 'backups-webhook/(:any)/create-backup',
+            'action' => function($secret) {
+                if ($secret != janitor()->option('secret')) {
+                    \Kirby\Http\Header::status(401);
+                    die();
+                }
+
+                try {
+                    $janitor = (new SylvainJule\Backups())->createBackup();
+                    unset($janitor['path']);
+
+                    return $janitor;
+                }
+                catch(Exception $e) {
+                    return [
+                        'status' => $e->getCode(),
+                        'message' => $e->getMessage()
+                    ];
+                }
+            }
+        ],
+    ],
     'api' => [
         'routes' => [
             [
                 'pattern' => 'backups/create-backup',
                 'action'  => function() {
-                    $maximum = option('sylvainjule.backups.maximum');
                     $b = new SylvainJule\Backups();
-                    $bCount = $b->getBackupsCount();
-
-                    $output  = realpath(kirby()->roots()->accounts() .'/../') . '/backups/'. option('sylvainjule.backups.prefix') .'{{ timestamp }}.zip';
-
-                    if($maximum && $bCount == $maximum) {
-                        $b->deleteOldestBackup();
-                    }
-
-                    return janitor()->command('janitor:backupzip --output '. $output .' --quiet');
+                    return $b->createBackup();
                 }
             ],
             [
