@@ -3,7 +3,7 @@
               :button="$t('backups.delete.multiple.button')" theme="negative" icon="trash" size="medium"
               @submit="deleteBackups">
 
-        <k-form ref="form" :fields="fields" v-model="value" @input="onPeriodChange"/>
+        <k-form ref="form" class="backups-delete-form" :fields="fields" v-model="value" @input="onPeriodChange"/>
 
         <k-box theme="info" v-if="hasWarning">
             <k-text v-html="warning" />

@@ -1,5 +1,11 @@
 .k-backups-view-header, .backups-list {
-    .k-button[data-disabled] { opacity: 1; }
+    .k-button[aria-disabled] { 
+        --opacity-disabled: 1; 
+    }
+}
+
+.k-backups-view {
+    padding: 0;
 }
 
 .backups-header {
@@ -9,7 +15,8 @@
     font-size: .875rem;
     font-weight: 600;
     padding: 0 .7rem;
-    background: #e5e5e5;
+    background: var(--menu-color-back);
+    border-radius: var(--rounded);
     position: sticky;
     top: 0;
     z-index: 1;
@@ -22,20 +29,17 @@
         display: flex;
         align-items: center;
         padding: 0 .7rem;
-        &:not(:first-child) { border-top: 1px solid rgba(0, 0, 0, .12); }
-        &:last-child        { border-bottom: 1px solid rgba(0, 0, 0, .12); }
+        &:not(:first-child) { border-top: 1px solid var(--color-border); }
+        &:last-child        { border-bottom: 1px solid var(--color-border); }
         &:hover {
-            background: white;
-            border-color: transparent;
-            &+ li {
-                border-top-color: transparent;
-            }
+            background: rgba(white, .3);
         }
         .k-icon svg {
             width: .875rem;
             height: .875rem;
         }
         .backup-filename {
+            --icon-size: 16px;
             display: flex;
             align-items: center;
             .k-icon {
@@ -44,14 +48,17 @@
         }
         .backup-actions {
             .backup-download {
-                padding: .075rem .45rem .25rem .45rem;
-                border-radius: 3px;
-                background: white;
+                // padding: .075rem .45rem .25rem .45rem;
+                // border-radius: 3px;
+                // background: white;
                 margin-right: .5rem;
                 .k-icon svg {
-                    width: .7rem;
-                    height: .7rem;
+                    // // width: .7rem;
+                    // height: .7rem;
                 }
+            }
+            .backup-delete {
+                background: var(--theme-color-300);
             }
         }
     }
@@ -80,6 +87,12 @@
         font-size: .875rem;
         background: #e8e8e8;
         padding: 1.5rem 2rem;
+    }
+}
+
+.backups-delete-form {
+    &+ .k-box {
+        margin-top: .5rem;
     }
 }
 

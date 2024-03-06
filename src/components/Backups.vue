@@ -5,16 +5,16 @@
         {{ title }}
 
         <k-button-group slot="left">
-          <k-button v-if="creationStatus == 'default'" icon="add" @click="createBackup">{{ $t('backups.create') }}</k-button>
-          <k-button v-else-if="creationStatus == 'progress'" icon="backupsLoader" :disabled="true">{{ $t('backups.create.process') }}</k-button>
-          <k-button v-else-if="creationStatus == 'success'" icon="check" :disabled="true" theme="positive">{{ $t('backups.create.success') }}</k-button>
-          <k-button v-else-if="creationStatus == 'error'" icon="alert" :disabled="true" theme="negative">{{ $t('backups.create.error') }}</k-button>
+          <k-button v-if="creationStatus == 'default'" icon="add" @click="createBackup" variant="filled" :text="$t('backups.create')" size="sm" />
+          <k-button v-else-if="creationStatus == 'progress'" icon="loader" :disabled="true" variant="filled" :text="$t('backups.create.process')" size="sm" />
+          <k-button v-else-if="creationStatus == 'success'" icon="check" :disabled="true" theme="positive" variant="filled" :text="$t('backups.create.success')" size="sm" />
+          <k-button v-else-if="creationStatus == 'error'" icon="alert" :disabled="true" theme="negative" variant="filled" :text="$t('backups.create.error')" size="sm" />
         </k-button-group>
 
         <k-button-group slot="right" v-if="backups.length">
-          <k-button icon="download" @click="copyAndDownload('latest')" v-if="downloading !== 'latest'">{{ $t('backups.download.latest') }}</k-button>
-          <k-button icon="backupsLoader" :disabled="true" v-else>{{ $t('backups.downloading') }}</k-button>
-          <k-button icon="trash" @click="openBackupsDeleteDialog">{{ $t('backups.delete.some') }}</k-button>
+          <k-button icon="download" @click="copyAndDownload('latest')" v-if="downloading !== 'latest'" variant="filled" :text="$t('backups.download.latest')" size="sm" />
+          <k-button icon="loader" :disabled="true" v-else variant="filled" :text="$t('backups.downloading')" size="sm" />
+          <k-button icon="trash" @click="openBackupsDeleteDialog" variant="filled" :text="$t('backups.delete.some')" size="sm" />
         </k-button-group>
       </k-header>
 
@@ -29,7 +29,7 @@
         </ul>
       </section>
       <div class="backups-placeholder" v-else>
-        <div class="backups-placeholder-empty" v-else>{{ $t('backups.placeholder') }}</div>
+        <div class="backups-placeholder-empty">{{ $t('backups.placeholder') }}</div>
       </div>
 
       <backup-delete-dialog ref="backup-delete" @deleted="$reload"/>
