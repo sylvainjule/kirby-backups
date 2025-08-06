@@ -4,16 +4,18 @@
             <k-header class="k-backups-view-header">
                 {{ title }}
 
-                <k-button-group slot="buttons" v-if="backups.length">
-                <k-button v-if="creationStatus == 'default'" icon="add" @click="createBackup" variant="filled" :text="$t('backups.create')" size="sm" />
-                <k-button v-else-if="creationStatus == 'progress'" icon="loader" :disabled="true" variant="filled" :text="$t('backups.create.process')" size="sm" />
-                <k-button v-else-if="creationStatus == 'success'" icon="check" :disabled="true" theme="positive" variant="filled" :text="$t('backups.create.success')" size="sm" />
-                <k-button v-else-if="creationStatus == 'error'" icon="alert" :disabled="true" theme="negative" variant="filled" :text="$t('backups.create.error')" size="sm" />
+                <k-button-group slot="buttons">
+                    <k-button v-if="creationStatus == 'default'" icon="add" @click="createBackup" variant="filled" :text="$t('backups.create')" size="sm" />
+                    <k-button v-else-if="creationStatus == 'progress'" icon="loader" :disabled="true" variant="filled" :text="$t('backups.create.process')" size="sm" />
+                    <k-button v-else-if="creationStatus == 'success'" icon="check" :disabled="true" theme="positive" variant="filled" :text="$t('backups.create.success')" size="sm" />
+                    <k-button v-else-if="creationStatus == 'error'" icon="alert" :disabled="true" theme="negative" variant="filled" :text="$t('backups.create.error')" size="sm" />
 
-                <k-button icon="download" @click="copyAndDownload('latest')" v-if="downloading !== 'latest'" variant="filled" :text="$t('backups.download.latest')" size="sm" />
-                <k-button icon="loader" :disabled="true" v-else variant="filled" :text="$t('backups.downloading')" size="sm" />
+                    <template v-if="backups.length">
+                        <k-button icon="download" @click="copyAndDownload('latest')" v-if="downloading !== 'latest'" variant="filled" :text="$t('backups.download.latest')" size="sm" />
+                        <k-button icon="loader" :disabled="true" v-else variant="filled" :text="$t('backups.downloading')" size="sm" />
 
-                <k-button icon="trash" @click="openBackupsDeleteDialog" variant="filled" :text="$t('backups.delete.some')" size="sm" />
+                        <k-button icon="trash" @click="openBackupsDeleteDialog" variant="filled" :text="$t('backups.delete.some')" size="sm" />
+                    </template>
                 </k-button-group>
             </k-header>
 
