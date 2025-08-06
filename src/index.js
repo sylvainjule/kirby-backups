@@ -1,14 +1,6 @@
 import Backups from './components/Backups.vue';
 
 panel.plugin('sylvainjule/backups', {
-    use: {
-        plugin(Vue) {
-            window.Vue = Vue
-            if (window.__VUE_DEVTOOLS_GLOBAL_HOOK__) {
-                window.__VUE_DEVTOOLS_GLOBAL_HOOK__.Vue = Vue;
-            }
-        },
-    },
     components: {
         'k-backups-view': Backups,
     },
