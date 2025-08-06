@@ -8,7 +8,7 @@ This plugin allows you to create, download and manage backups from a dedicated V
 
 ## Overview
 
-> This plugin is completely free and published under the MIT license. However, if you are using it in a commercial project and want to help me keep up with maintenance, please consider [making a donation of your choice](https://www.paypal.me/sylvainjl) or purchasing your license(s) through [my affiliate link](https://a.paddle.com/v2/click/1129/36369?link=1170).
+> This plugin is completely free and published under the MIT license. However, if you are using it in a commercial project and want to help me keep up with maintenance, you can consider [making a donation of your choice](https://www.paypal.me/sylvainjl).
 
 - [1. Installation](#1-installation)
 - [2. Usage](#2-usage)
@@ -19,8 +19,9 @@ This plugin allows you to create, download and manage backups from a dedicated V
 
 ## 1. Installation
 
-> Prerequisite: you must install [kirby-janitor](https://github.com/bnomei/kirby3-janitor) (and the CLI per janitor's instructions) for this plugin to work.
-> For a Kirby 3 website, install v.1.0.3. For a Kirby 4 website, install v.1.0.4+.
+> Kirby 3: up to 1.0.3. Kirby 4: up to 1.0.5. Kirby 5: 1.1.0+.<br>
+> You also **must install [kirby-janitor](https://github.com/bnomei/kirby3-janitor)** (and the CLI per janitor's instructions) for this plugin to work.<br>
+> For older releases, install the kirby-janitor release from the same timeframe.
 
 Download and copy this repository to ```/site/plugins/backups```
 
@@ -57,10 +58,9 @@ return [
 ];
 ```
 
-The backups list isn't paginated because it is not intended to keep hundreds of backups around. If included in a client website, you should include a note specifying an expected frequency of backup creation / deletion (or set up a CRON job).
-
 You can enforce a maximum number of backups by setting the `maximum` option to any integer (default is `false`).
 If this number is reached the oldest backup will be deleted automatically whenever a new backup is created.
+If included in a client website, you should include a note specifying an expected frequency of backup creation / deletion (or set up a CRON job).
 
 ```php
 // site/config.php
@@ -73,6 +73,15 @@ If you want to create backups from a CRON job and still benefit from this `maxim
 
 ```
 https://your.domain/backups-webhook/{janitor.secret}/create-backup
+```
+
+If you have set the `maximum` option to a high amount, you can choose the pagination limit of the table with the `limit` option (default is `20`).
+
+```php
+// site/config.php
+return [
+    'sylvainjule.backups.limit' => 20,
+];
 ```
 
 

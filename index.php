@@ -22,7 +22,8 @@ Kirby::plugin('sylvainjule/backups', [
                                 'component' => 'k-backups-view',
                                 'props' => [
                                     'backups' => $backups,
-                                    'title'   => tc('backups.pluralized', $count)
+                                    'title'   => tc('backups.pluralized', $count),
+                                    'limit'   => option('sylvainjule.backups.limit')
                                 ]
                             ];
                         }
@@ -35,6 +36,7 @@ Kirby::plugin('sylvainjule/backups', [
         'publicFolder' => 'backups-temp',
         'prefix'       => 'backup-',
         'maximum'      => false,
+        'limit'        => 20
     ],
     'routes' => [
         [

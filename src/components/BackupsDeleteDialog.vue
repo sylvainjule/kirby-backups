@@ -1,7 +1,7 @@
 <template>
     <k-dialog :class="['backups-delete-dialog', {'can-delete': canDelete}]" ref="dialog"
-              :button="$t('backups.delete.multiple.button')" theme="negative" icon="trash" size="medium"
-              @submit="deleteBackups">
+            :button="$t('backups.delete.multiple.button')" theme="negative" icon="trash" size="medium"
+            @submit="deleteBackups">
 
         <k-form ref="form" class="backups-delete-form" :fields="fields" v-model="value" @input="onPeriodChange"/>
 
