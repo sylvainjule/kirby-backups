@@ -14,9 +14,28 @@ class Backups {
     protected $prefix;
 
     function __construct() {
-        $this->dir = realpath(kirby()->roots()->accounts() . '/../') .'/backups/';
-        $this->publicDir = kirby()->root('assets') . '/'. option('sylvainjule.backups.publicFolder')  .'/';
-        $this->publicUrl = kirby()->url('assets') . '/'. option('sylvainjule.backups.publicFolder')  .'/';
+        $site = kirby()->site();
+
+        if(option('sylvainjule.backups.path')) {
+            $dir = $site->toSafeString(option('sylvainjule.backups.path'));
+            $this->dir = rtrim($dir, '/'). '/';
+        }
+        else {
+            $this->dir = realpath(kirby()->roots()->accounts() . '/../') .'/backups/';
+        }
+
+        if(option('sylvainjule.backups.publicPath') && option('sylvainjule.backups.publicUrl')) {
+            $publicDir = $site->toSafeString(option('sylvainjule.backups.publicPath'));
+            $this->publicDir = rtrim($publicDir, '/'). '/';
+
+            $publicUrl = $site->toSafeString(option('sylvainjule.backups.publicUrl'));
+            $this->publicUrl = rtrim($publicUrl, '/'). '/';
+        }
+        else {
+            $this->publicDir = kirby()->root('assets') . '/'. option('sylvainjule.backups.publicFolder')  .'/';
+            $this->publicUrl = kirby()->url('assets') . '/'. option('sylvainjule.backups.publicFolder')  .'/';
+        }
+
         $this->maximum   = kirby()->option('sylvainjule.backups.maximum');
         $this->prefix    = kirby()->option('sylvainjule.backups.prefix');
     }
@@ -48,7 +67,7 @@ class Backups {
 
     public function createBackup() {
         $count  = $this->getBackupsCount();
-        $output  = realpath(kirby()->roots()->accounts() .'/../') . '/backups/'. $this->prefix .'{{ timestamp }}.zip';
+        $output = $this->dir . $this->prefix .'{{ timestamp }}.zip';
 
         if($this->maximum && $count == $this->maximum) {
             $this->deleteOldestBackup();

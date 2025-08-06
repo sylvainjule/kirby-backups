@@ -58,6 +58,19 @@ return [
 ];
 ```
 
+If you want more control over where backups are created / copied, you can set both paths with their dedicated option (if you change the public path, make sure to fill both the `publicPath` and `publicUrl` options):
+
+```php
+// site/config.php
+return [
+    // if filled, backups will be created here
+    'sylvainjule.backups.path' => '{{ kirby.root("site") }}/my-custom-folder',
+    // if filled, backups will be copied here for downloading (in this case, it will take precedence over the publicFolder option)
+    'sylvainjule.backups.publicPath' => '{{ kirby.root("assets") }}/my-custom-folder',
+    'sylvainjule.backups.publicUrl'  => '{{ kirby.url("assets") }}/my-custom-folder',
+];
+```
+
 You can enforce a maximum number of backups by setting the `maximum` option to any integer (default is `false`).
 If this number is reached the oldest backup will be deleted automatically whenever a new backup is created.
 If included in a client website, you should include a note specifying an expected frequency of backup creation / deletion (or set up a CRON job).
