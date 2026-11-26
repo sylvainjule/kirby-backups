@@ -1,6 +1,6 @@
 <template>
-    <k-dialog size="medium" ref="dialog" theme="negative" icon="trash"
-            :button="$t('backups.delete.button')" @close="resetBackup" @cancel="resetBackup" @submit="deleteBackup">
+    <k-dialog :visible="visible" size="medium" :submit-button="submitButton"
+              @cancel="$emit('cancel')" @submit="deleteBackup">
         <k-text>
             {{ $t('backups.delete.prefix') }} <strong>{{ filename }}</strong>
         </k-text>
@@ -9,31 +9,44 @@
 
 <script>
 export default {
+    props: {
+        filename: { type: String, required: true },
+        visible: { type: Boolean, default: true },
+    },
+    emits: ['cancel', 'close'],
     data() {
-        return {
-            backup: null,
-        }
+        return { busy: false, active: true };
     },
     computed: {
-        filename() {
-            return this.backup ? this.backup.filename : ''
-        }
+        submitButton() {
+            return {
+                text: this.$t('backups.delete.button'),
+                theme: 'negative',
+                icon: this.busy ? 'loader' : 'trash',
+                disabled: this.busy,
+            };
+        },
+    },
+    beforeUnmount() {
+        this.active = false;
     },
     methods: {
-        open(backup) {
-            this.backup = backup
-            this.$refs.dialog.open()
+        async deleteBackup() {
+            if(this.busy) return;
+            this.busy = true;
+            try {
+                const response = await this.$api.post('backups/delete-backup', {filename: this.filename});
+                if(!response.deleted) throw new Error(this.$t('backups.request.error'));
+                if(this.active) this.$emit('close');
+                await this.$panel.reload();
+            } 
+            catch (error) {
+                this.$panel.notification.error(error.message);
+            } 
+            finally {
+                this.busy = false;
+            }
         },
-        resetBackup() {
-            this.backup = null
-        },
-        deleteBackup() {
-            this.$api.post('backups/delete-backup', {filename: this.backup.filename})
-                .then(response => {
-                    response.deleted && this.$emit('deleted', this.backup.filename)
-                    this.$refs.dialog.close()
-                })
-        },
-    }
+    },
 };
 </script>

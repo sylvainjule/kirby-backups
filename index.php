@@ -42,7 +42,8 @@ Kirby::plugin('sylvainjule/backups', [
         [
             'pattern' => 'backups-webhook/(:any)/create-backup',
             'action' => function($secret) {
-                if ($secret != janitor()->option('secret')) {
+                $expected = janitor()->option('secret');
+                if(!is_string($expected) || $expected === '' || !hash_equals($expected, (string)$secret)) {
                     \Kirby\Http\Header::status(401);
                     die();
                 }
@@ -67,6 +68,7 @@ Kirby::plugin('sylvainjule/backups', [
             [
                 'pattern' => 'backups/create-backup',
                 'action'  => function() {
+                    kirby()->panel()->access()->area('backups', throws: true);
                     $b = new SylvainJule\Backups();
                     return $b->createBackup();
                 }
@@ -74,6 +76,7 @@ Kirby::plugin('sylvainjule/backups', [
             [
                 'pattern' => 'backups/get-backups-list',
                 'action'  => function() {
+                    kirby()->panel()->access()->area('backups', throws: true);
                     $b = new SylvainJule\Backups();
                     return $b->getBackupsArray(true);
                 }
@@ -81,6 +84,7 @@ Kirby::plugin('sylvainjule/backups', [
             [
                 'pattern' => 'backups/copy-to-assets',
                 'action'  => function() {
+                    kirby()->panel()->access()->area('backups', throws: true);
                     $filename  = get('filename');
                     $publicUrl = $filename ? (new SylvainJule\Backups())->copyToAssets($filename) : null;
 
@@ -91,6 +95,7 @@ Kirby::plugin('sylvainjule/backups', [
                 'pattern' => 'backups/delete-public-backups',
                 'method'  => 'POST',
                 'action'  => function() {
+                    kirby()->panel()->access()->area('backups', throws: true);
                     $b = new SylvainJule\Backups();
                     return $b->deletePublicBackups();
                 }
@@ -99,6 +104,7 @@ Kirby::plugin('sylvainjule/backups', [
                 'pattern' => 'backups/delete-backup',
                 'method'  => 'POST',
                 'action'  => function() {
+                    kirby()->panel()->access()->area('backups', throws: true);
                     $filename = get('filename');
                     $b        = new SylvainJule\Backups();
                     $deleted  = $b->deleteBackup($filename);
@@ -109,6 +115,7 @@ Kirby::plugin('sylvainjule/backups', [
             [
                 'pattern' => 'backups/simulate-deletion',
                 'action'  => function() {
+                    kirby()->panel()->access()->area('backups', throws: true);
                     $period   = get('period');
                     $b        = new SylvainJule\Backups();
                     $toDelete = $b->simulateDeletion($period);
@@ -120,6 +127,7 @@ Kirby::plugin('sylvainjule/backups', [
                 'pattern' => 'backups/delete-backups',
                 'method'  => 'POST',
                 'action'  => function() {
+                    kirby()->panel()->access()->area('backups', throws: true);
                     $period   = get('period');
                     $b        = new SylvainJule\Backups();
                     $deleted  = $b->deleteBackups($period);

@@ -19,7 +19,7 @@ This plugin allows you to create, download and manage backups from a dedicated V
 
 ## 1. Installation
 
-> Kirby 3: up to 1.0.3. Kirby 4: up to 1.0.5. Kirby 5: 1.1.0+.<br>
+> Kirby 3: up to 1.0.3. Kirby 4: up to 1.0.5. Kirby 5: up to 1.1.1. Kirby 6: 2+.<br>
 > You also **must install [kirby-janitor](https://github.com/bnomei/kirby3-janitor)** (and the CLI per janitor's instructions) for this plugin to work.<br>
 > For older releases, install the kirby-janitor release from the same timeframe.
 

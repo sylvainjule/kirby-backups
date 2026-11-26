@@ -4,7 +4,8 @@
             <k-header class="k-backups-view-header">
                 {{ title }}
 
-                <k-button-group slot="buttons">
+                <template #buttons>
+                    <k-button-group>
                     <k-button v-if="creationStatus == 'default'" icon="add" @click="createBackup" variant="filled" :text="$t('backups.create')" size="sm" />
                     <k-button v-else-if="creationStatus == 'progress'" icon="loader" :disabled="true" variant="filled" :text="$t('backups.create.process')" size="sm" />
                     <k-button v-else-if="creationStatus == 'success'" icon="check" :disabled="true" theme="positive" variant="filled" :text="$t('backups.create.success')" size="sm" />
@@ -16,7 +17,8 @@
 
                         <k-button icon="trash" @click="openBackupsDeleteDialog" variant="filled" :text="$t('backups.delete.some')" size="sm" />
                     </template>
-                </k-button-group>
+                    </k-button-group>
+                </template>
             </k-header>
 
             <k-table :columns="columns" 
@@ -29,32 +31,23 @@
                      @paginate="page = $event.page"
                      @option="onOption">
             </k-table>
-
-            <backup-delete-dialog ref="backup-delete" @deleted="$reload"/>
-            <backups-delete-dialog ref="backups-delete" @deleted="$reload" :backups="backups"/>
         </k-view>
     </k-panel-inside>
 </template>
 
 <script>
-import BackupDeleteDialog  from './BackupDeleteDialog.vue'
-import BackupsDeleteDialog from './BackupsDeleteDialog.vue'
-
 export default {
-    components: {
-        'backup-delete-dialog': BackupDeleteDialog,
-        'backups-delete-dialog': BackupsDeleteDialog,
-    },
     props: {
-        backups: Array,
+        backups: { type: Array, default: () => [] },
         title: String,
-        limit: Number,
+        limit: { type: [Number, String, Boolean], default: 20 },
     },
     data() {
         return {
             downloading: false,
             creationStatus: 'default',
             page: 1,
+            statusTimer: null,
         }
     },
     computed: {
@@ -68,29 +61,30 @@ export default {
         options() {
             return [
                 {
-                    text: 'Download',
+                    text: this.$t('backups.download'),
                     icon: 'download',
                     click: 'download'
                 },
                 "-",
                 {
-                    text: 'Delete',
+                    text: this.$t('delete'),
                     icon: 'trash',
                     click: 'delete'
                 }
             ];
         },
+        pageLimit() {
+            const limit = Number(this.limit);
+            return Number.isInteger(limit) && limit > 0 ? limit : 20;
+        },
         pagination() {
-            let offset = 0;
-
-            if (this.limit) {
-                offset = (this.page - 1) * this.limit;
-            }
+            const page = Math.min(this.page, Math.max(1, Math.ceil(this.backups.length / this.pageLimit)));
+            const offset = (page - 1) * this.pageLimit;
 
             return {
-                page: this.page,
+                page: page,
                 offset: offset,
-                limit: this.limit,
+                limit: this.pageLimit,
                 total: this.backups.length,
                 align: 'center',
                 details: true
@@ -107,10 +101,14 @@ export default {
         },
     },
     mounted() {
-        window.beforeunload = this.deletePublicBackups()
-    },
-    destroyed() {
         this.deletePublicBackups()
+    },
+    beforeUnmount() {
+        clearTimeout(this.statusTimer);
+        this.deletePublicBackups();
+    },
+    watch: {
+        "pagination.page"(page) { this.page = page; }
     },
     methods: {
 
@@ -122,7 +120,7 @@ export default {
 
             try {
                 const response = await this.$api.get('backups/create-backup');
-                await this.$reload();
+                await this.$panel.reload();
                 this.setCreationStatus(response.status, true);
             }
             catch(error) {
@@ -133,7 +131,8 @@ export default {
             this.creationStatus = status == 200 ? 'success' : 'error';
 
             if(resetAfter) {
-                setTimeout(() => {
+                clearTimeout(this.statusTimer);
+                this.statusTimer = setTimeout(() => {
                     this.creationStatus = 'default'
                 }, 2000);
             }
@@ -151,39 +150,50 @@ export default {
             }
         },
         async copyAndDownload(filename) {
-            this.downloading = filename
-
-            filename = filename == 'latest' ? this.backups[0].filename : filename
-
-            const response = await this.$api.get('backups/copy-to-assets', {filename: filename})
-
-            if (response.url) {
-                window.location = response.url
+            if(this.downloading || (filename === 'latest' && !this.backups.length)) return;
+            this.downloading = filename;
+            try {
+                filename = filename === 'latest' ? this.backups[0].filename : filename;
+                const response = await this.$api.get('backups/copy-to-assets', {filename});
+                if(!response.url) throw new Error(this.$t('backups.request.error'));
+                window.location = response.url;
+            } 
+            catch (error) {
+                this.$panel.notification.error(error.message);
+            } 
+            finally {
+                this.downloading = false;
             }
-
-            this.downloading = false
         },
 
         /* Dialogs
         -------------------*/
 
         openBackupDeleteDialog(backup) {
-            this.$refs['backup-delete'].open(backup)
+            return this.$panel.dialog.open({
+                component: 'k-backups-delete-dialog',
+                props: { filename: backup.filename, visible: true }
+            });
         },
         openBackupsDeleteDialog() {
-            this.$refs['backups-delete'].open()
+            return this.$panel.dialog.open({
+                component: 'k-backups-delete-multiple-dialog',
+                props: { visible: true }
+            });
         },
 
         /* Cleanup
         -------------------*/
 
         deletePublicBackups() {
-            this.$api.post('backups/delete-public-backups');
+            return this.$api.post('backups/delete-public-backups').catch(error => {
+                console.warn('[backups] Temporary download cleanup failed', error);
+            });
         },
     }
 };
 </script>
 
 <style lang="scss">
-  @import '../assets/css/styles.scss';
+  @use '../assets/css/styles.scss';
 </style>

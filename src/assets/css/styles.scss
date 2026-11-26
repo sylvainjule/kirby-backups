@@ -100,12 +100,6 @@
     .k-box, .warning-loading {
         margin-top: 1rem;
     }
-    &:not(.can-delete) {
-        .k-dialog-button-submit {
-            opacity: 0.2;
-            pointer-events: none;
-        }
-    }
     .warning-loading {
         height: 58px;
         display: flex;
