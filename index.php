@@ -133,5 +133,6 @@ Kirby::plugin('sylvainjule/backups', [
         'en' => require_once __DIR__ . '/i18n/en.php',
         'fr' => require_once __DIR__ . '/i18n/fr.php',
         'de' => require_once __DIR__ . '/i18n/de.php',
+        'pt_PT' => require_once __DIR__ . '/i18n/pt_PT.php',
     ],
 ]);
